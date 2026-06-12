@@ -1,8 +1,6 @@
-from stats import count_words, count_letters, list_dictionaries
-import sys
+from stats import count_words, count_letters, list_dictionaries, chars_dict_to_sorted_list
 
-if len(sys.argv) != 2:
-    sys.exit("Usage: python3 main.py <path_to_book>")
+filepath = "books/frankenstein.txt"
 
 def get_book_text(filepath):
     with open(filepath) as f:
@@ -10,19 +8,21 @@ def get_book_text(filepath):
     
     return read_data
 
-dictionaries = list_dictionaries(count_letters(get_book_text(sys.argv[1]))) 
+dictionaries = list_dictionaries(count_letters(get_book_text(filepath))) 
 
 def main():
 
     print("============ BOOKBOT ============")
     print("Analyzing book found at books/frankenstein.txt...")
     print("----------- Word Count ----------")
-    print(f"Found {count_words(get_book_text(sys.argv[1]))} total words")
+    print(f"Found {count_words(get_book_text(filepath))} total words")
+    print("--------- Sorted Character List -------")
+    print(f"{chars_dict_to_sorted_list(count_letters(get_book_text(filepath)))}")
     print("--------- Character Count -------")
 
     for pair in dictionaries:
         if pair["char"].isalpha() == True: 
-            print(f"{pair["char"]}: {pair["occurrence"]}")
+            print(f"{pair['char']}: {pair['occurrence']}")
 
     print("============= END ===============")
 
